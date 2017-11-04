@@ -3,9 +3,15 @@ import { connect } from 'react-redux'
 
 class App extends Component {
   render() {
-    console.log(this.props.list)
+    let list = this.props.data.map( (item, i) => (
+      <div key={i}>{item}</div>
+    )
+
+    )
     return (
       <div>
+        {list}
+        <a href="/auth/instagram"><li>Login/Register</li></a>
       </div>
     );
   }
@@ -13,7 +19,7 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    list: state.guests
+    data: state.guests
   };
 }
 
