@@ -18,6 +18,9 @@ class ChartPage extends Component {
     this.displayChart = this.displayChart.bind(this);
   }
   componentDidMount(){
+    //as soon as the user accesses the chart page,
+    //the component retrieves the user's username
+    //from Twitter
     axios.get('http://localhost:8080/api/user')
     .then((response)=>{
       this.setState({user: response.data, loggedIn: true})
@@ -26,27 +29,35 @@ class ChartPage extends Component {
   }
 
   displayChart(){
+    //This function passes the user's username
+    //into the action so it can retrieve the user's
+    //profile information.
     this.props.getTwitterData(this.state.user)
   }
 
   render() {
+    //If the user is not logged in, this conditional JSX
+    //is returned prompting the user to log in.
     if(!this.state.loggedIn){
-      return (
-        <div>
-          <br/>
-          <a href='http://localhost:8080/auth/twitter'>
-            <button className='button'>
-              Log in to Twitter
-            </button>
-          </a>
-          <Link className="link" to="/"><li>Home</li></Link>
-        </div>
-      );
-    }
-    if(!this.props.showChart){
       return (
         <div className="chart-display-wrapper">
           <div className="chart-display-container">
+            <a href='http://localhost:8080/auth/twitter'>
+              <button className='button'>
+                Log in to Twitter
+              </button>
+            </a>
+            <Link className="link" to="/"><li>Home</li></Link>
+          </div>
+        </div>
+      );
+    }
+    //Once the user has logged in, the user is then able to 
+    //access the graph.
+    if(!this.props.showChart){
+      return (
+          <div className="chart-display-wrapper">
+            <div className="chart-display-container">
             <h2>Welcome {this.state.user}!</h2>
             <Link className="link" to="/"><li>Home</li></Link>
             <button className='button' onClick={this.displayChart}>
@@ -56,6 +67,8 @@ class ChartPage extends Component {
         </div>
       );
     }
+    //Below the props are passed into the Chart component
+    //where the data is rendered into a bar graph.
     return (
       <div className="chart-wrapper">
         <h2>Welcome {this.state.user}!</h2>

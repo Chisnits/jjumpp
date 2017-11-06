@@ -2,13 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
-const path = require('path');
 const cors = require('cors');
 const FacebookStrategy = require('passport-facebook');
 const TwitterStrategy = require('passport-twitter');
 const Twitter = require('twitter');
 const config = require('./config');
-const request = require('request-promise');
 
 const app = module.exports = express();
 
@@ -70,13 +68,17 @@ passport.serializeUser(function(user, done) {
   { successRedirect: 'http://localhost:3000/chart',
     failureRedirect: 'http://localhost:3000/' 
   }));
-
+//api/user runs as soon as the component mounts
+//passing the twitter username into the component
   app.get('/api/user', (req, res)=>{
     if(twitterUser){
       res.status(200).send(twitterUser)
     } else res.status(404)
   })
 
+//The params are passed directly through the axios
+//request in the redux action. The params are the
+//username of the twitter account.
   app.get('/api/twitterData/:screen_name', (req, res)=>{
     const params = {screen_name: req.params.screen_name}
     client.get('users/lookup', params, function(error, data, response) {
@@ -93,6 +95,11 @@ passport.authenticate('facebook',
 { successRedirect: 'http://localhost:3000/fbchart',
   failureRedirect: 'http://localhost:3000/' 
 }));
+app.get('/api/fbuser', (req, res)=>{
+  if(facebookUser){
+    res.status(200).send(facebookUser)
+  } else res.status(404)
+})
 
 app.listen(8080, function() {
   console.log('Listening on 8080');

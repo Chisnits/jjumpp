@@ -12,6 +12,7 @@ class App extends Component {
             <h1>Twitter Stats Tracker</h1>
             <Link className="link" to="/chart"><li>Chart</li></Link>
             <Link className="link" to="/about"><li>About</li></Link>
+            {/* <Link className="link" to="/fbchart"><li>Facebook</li></Link> */}
           </div>
           
       </div>

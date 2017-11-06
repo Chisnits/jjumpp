@@ -18,12 +18,15 @@ class About extends Component {
                             Login
                         </button>
                         </a>
-                        <p>This is a basic application utilizing Passport.js on a Node.js server for 
+                        <p> This is a basic application utilizing Passport.js on a Node.js server for 
                             authentication. The server then makes a request to the twitter api to retrieve
                             additional information from your specific account. The endpoint uses
                             the username that is given at the time of authentication. The application
                             then uses React & Redux to pass the data throughout the views. The data is then
-                            graphed using react-chartjs-2 to create a simple bar graph.
+                            graphed using react-chartjs-2 to create a simple bar graph. Initially i tried to
+                            use the build script that comes with create-react-app, but it was breaking my Node
+                            endpoints. Instead I used a proxy located in the package.json to
+                            connect the server to the React app.
                         </p>
                     </div>
                 </div>

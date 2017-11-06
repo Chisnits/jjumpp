@@ -9,7 +9,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import About from './components/About';
 import ChartPage from './components/ChartPage';
-import FacebookChartPage from './components/FacebookChart';
+import FacebookChartPage from './components/FacebookChartPage';
 
 ReactDOM.render(
     <Provider store={store}>

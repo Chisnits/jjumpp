@@ -58,7 +58,7 @@ class Chart extends Component {
             title: {
               display: true,
               text: 'Twitter Activity',
-              fontSize: 25,
+              fontSize: 30,
             }
             
           }}
