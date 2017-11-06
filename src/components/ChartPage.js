@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+
+import './styles/Chart.css';
 
 import Chart from './Chart';
 import {getTwitterData} from './../ducks/reducer';
@@ -12,7 +15,7 @@ class ChartPage extends Component {
         user: [],
         loggedIn: false,
     }
-    this.showStats = this.showStats.bind(this);
+    this.displayChart = this.displayChart.bind(this);
   }
   componentDidMount(){
     axios.get('http://localhost:8080/api/user')
@@ -22,13 +25,11 @@ class ChartPage extends Component {
     .catch(err=>{console.log('error', err)})
   }
 
-  showStats(){
+  displayChart(){
     this.props.getTwitterData(this.state.user)
   }
 
   render() {
-    console.log(this.state.user);
-    console.log(this.props.followers)
     if(!this.state.loggedIn){
       return (
         <div>
@@ -38,30 +39,32 @@ class ChartPage extends Component {
               Log in to Twitter
             </button>
           </a>
+          <Link className="link" to="/"><li>Home</li></Link>
         </div>
       );
     }
     if(!this.props.showChart){
       return (
-        <div>
-          <br/>
-          <h2>Welcome {this.state.user}!</h2>
-          <br/>
-          <br/>
-          <button className='button' onClick={this.showStats}>
-            Show me my Twitter Stats
-          </button>
+        <div className="chart-display-wrapper">
+          <div className="chart-display-container">
+            <h2>Welcome {this.state.user}!</h2>
+            <Link className="link" to="/"><li>Home</li></Link>
+            <button className='button' onClick={this.displayChart}>
+              Show Chart
+            </button>
+          </div>
         </div>
       );
     }
     return (
-      <div>
-        <br/>
+      <div className="chart-wrapper">
         <h2>Welcome {this.state.user}!</h2>
+        <Link className="link" to="/"><li>Home</li></Link>
         {this.props.showChart ? 
           <Chart  
                 followers={this.props.followers}
                 friends={this.props.friends}
+                favorites={this.props.favorites}
                 statuses={this.props.statuses}
         />
         :
@@ -73,7 +76,6 @@ class ChartPage extends Component {
 }
 
 function mapStateToProps(state){
-  console.log(state)
   return {
     followers: state.followers,
     friends: state.friends,

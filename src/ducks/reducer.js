@@ -6,20 +6,20 @@ const initialState = {
   followers: 0,
   friends: 0,
   statuses: 0,
-  displayChart: false
+  showChart: false
 }
 
 export default function reducer(state = initialState, action){
-  console.log(action.payload)
   switch (action.type) {
     case GET_TWITTER_DATA + '_PENDING':
-      return Object.assign({}, state, {displayChart: false})
+      return Object.assign({}, state, {showChart: false})
     case GET_TWITTER_DATA + '_FULFILLED':
       return Object.assign({}, state, {
         followers: action.payload.followers_count,
         friends: action.payload.friends_count,
+        favorites: action.payload.favourites_count,
         statuses: action.payload.statuses_count,
-        displayChart: true
+        showChart: true
       });
     default: 
     return state;
@@ -27,9 +27,9 @@ export default function reducer(state = initialState, action){
 }
 
 export function getTwitterData(user){
-console.log(user)
   return {
     type: GET_TWITTER_DATA,
     payload: getTwitterDataAction(user)
   }
 }
+

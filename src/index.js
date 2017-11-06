@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import About from './components/About';
 import ChartPage from './components/ChartPage';
+import FacebookChartPage from './components/FacebookChart';
 
 ReactDOM.render(
     <Provider store={store}>
@@ -17,6 +18,7 @@ ReactDOM.render(
                 <Switch>
                     <Route path="/about" component= { About } />
                     <Route path="/chart" component= { ChartPage }/>
+                    <Route path="/fbchart" component= { FacebookChartPage }/>
                     <Route exact path="/" component= { App } />
                 </Switch>
             </div>

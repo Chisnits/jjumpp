@@ -26,8 +26,11 @@ app.use(session({
   app.use(passport.session());
 
 let facebookUser;
-passport.use(new FacebookStrategy(config.facebookAuthPass, (accessToken, refreshToken, profile, cb) => {
-    // console.log(profile);
+let facebookToken;
+passport.use(new FacebookStrategy(config.facebookAuthPass, (accessToken, refreshToken, profile, done) => {
+  facebookUser = profile.displayName;
+  facebookToken = accessToken;
+  return done(null, profile)
     
 }));
 let twitterUser;
@@ -87,7 +90,7 @@ app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email'] 
 
 app.get('/auth/facebook/callback',
 passport.authenticate('facebook', 
-{ successRedirect: 'http://localhost:3000/',
+{ successRedirect: 'http://localhost:3000/fbchart',
   failureRedirect: 'http://localhost:3000/' 
 }));
 
