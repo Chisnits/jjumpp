@@ -75,7 +75,6 @@ class ChartPage extends Component {
 function mapStateToProps(state){
   console.log(state)
   return {
-    test: state.test,
     followers: state.followers,
     friends: state.friends,
     statuses: state.statuses,
