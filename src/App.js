@@ -1,26 +1,18 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
+import { Link } from 'react-router-dom';
 
 class App extends Component {
   render() {
-    let list = this.props.data.map( (item, i) => (
-      <div key={i}>{item}</div>
-    )
-
-    )
+    
     return (
-      <div>
-        {list}
-        <a href="/auth/instagram"><li>Login/Register</li></a>
+        <div>
+          <h2>Twitter Stats Tracker</h2>
+          <Link to="/chart"><li>Chart</li></Link>
+          <Link to="/about"><li>About</li></Link>
+          
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    data: state.guests
-  };
-}
-
-export default connect(mapStateToProps)(App);
+export default(App);
