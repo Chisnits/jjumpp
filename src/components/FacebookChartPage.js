@@ -6,27 +6,30 @@ class FacebookChartPage extends Component {
     constructor(props){
         super(props);
         this.state = {
-            fbUser: [],
+            user: [],
             loggedIn: false,
         }
       }
       componentDidMount(){
         axios.get('http://localhost:8080/api/fbuser')
         .then((response)=>{
-          this.setState({fbUser: response.data, loggedIn: true})
+          this.setState({user: response.data, loggedIn: true})
         })
         .catch(err=>{console.log('error', err)})
       }
-    render() {if(!this.state.loggedIn){
+    render(){
+      console.log(this.state.user)
+      if(!this.state.loggedIn){
         return (
-          <div>
-            <br/>
-            <a href='http://localhost:8080/auth/facebook'>
-              <button className='button'>
-                Log in to Facebook
-              </button>
-            </a>
-            <Link className="link" to="/"><li>Home</li></Link>
+          <div className="chart-display-wrapper">
+              <div className="chart-display-container">
+                <a href='http://localhost:8080/auth/facebook'>
+                <button className='button'>
+                  Log in to Facebook
+                </button>
+                </a>
+                <Link className="link" to="/"><li>Home</li></Link>
+              </div>
           </div>
         );
       }

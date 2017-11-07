@@ -26,7 +26,8 @@ class About extends Component {
                             graphed using react-chartjs-2 to create a simple bar graph. Initially i tried to
                             use the build script that comes with create-react-app, but it was breaking my Node
                             endpoints. Instead I used a proxy located in the package.json to
-                            connect the server to the React app.
+                            connect the server to the React app. I also have allowed logins through passport.js
+                            for both Facebook and Google + however have not yet setup graphs for data.
                         </p>
                     </div>
                 </div>
