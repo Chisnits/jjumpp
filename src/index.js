@@ -10,6 +10,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import About from './components/About';
 import ChartPage from './components/ChartPage';
 import FacebookChartPage from './components/FacebookChartPage';
+import GoogleChartPage from './components/GoogleChartPage';
 
 ReactDOM.render(
     <Provider store={store}>
@@ -19,6 +20,7 @@ ReactDOM.render(
                     <Route path="/about" component= { About } />
                     <Route path="/chart" component= { ChartPage }/>
                     <Route path="/fbchart" component= { FacebookChartPage }/>
+                    <Route path="/googlechart" component= { GoogleChartPage }/>
                     <Route exact path="/" component= { App } />
                 </Switch>
             </div>

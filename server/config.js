@@ -15,6 +15,11 @@ module.exports = {
       accessToken: '905554025797492736-CTGV43QzeVOYhLgcykIkkloTlQdkgfo',
       tokenSecret: 'xQubvmpBsuKBPaZ31Xq187VuUqiYigBaOWVFeMmg3LWt4'
      },
+     googleAuthPass: {
+       clientID: '778850259775-f6san00shqrl6qco7hqbj7cbi0g7c62h.apps.googleusercontent.com',
+       clientSecret: 'rLyQ-3UCtsEr0XHXXajTmUod',
+       callbackURL: 'http://localhost:8080/auth/google/callback'
+     },
      mySecret: {
        secret: "fhd#s8fjskljf*$937h)~fe"
      }

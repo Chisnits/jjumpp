@@ -5,6 +5,7 @@ const session = require('express-session');
 const cors = require('cors');
 const FacebookStrategy = require('passport-facebook');
 const TwitterStrategy = require('passport-twitter');
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const Twitter = require('twitter');
 const config = require('./config');
 
@@ -23,14 +24,7 @@ app.use(session({
   app.use(passport.initialize());
   app.use(passport.session());
 
-let facebookUser;
-let facebookToken;
-passport.use(new FacebookStrategy(config.facebookAuthPass, (accessToken, refreshToken, profile, done) => {
-  facebookUser = profile.displayName;
-  facebookToken = accessToken;
-  return done(null, profile)
-    
-}));
+//////////////Twitter 0Auth////////////
 let twitterUser;
 let twitterToken;
 let twitterTokenSecret;
@@ -88,18 +82,69 @@ passport.serializeUser(function(user, done) {
     });
   })
   
-app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email'] }));
+//////////Facebook 0Auth////////////
+  // let facebookUser;
+  // let facebookToken;
+  // passport.use(new FacebookStrategy(config.facebookAuthPass, (accessToken, refreshToken, profile, done) => {
+  //   facebookUser = profile.displayName;
+  //   facebookToken = accessToken;
+  //   return done(null, profile)
+  // }));
 
-app.get('/auth/facebook/callback',
-passport.authenticate('facebook', 
-{ successRedirect: 'http://localhost:3000/fbchart',
+// app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email'] }));
+
+// app.get('/auth/facebook/callback',
+// passport.authenticate('facebook', 
+// { successRedirect: 'http://localhost:3000/fbchart',
+//   failureRedirect: 'http://localhost:3000/' 
+// }));
+// app.get('/api/fbuser', (req, res)=>{
+//   if(facebookUser){
+//     res.status(200).send(facebookUser)
+//   } else res.status(404)
+// })
+
+let googleUser;
+let googleToken;
+let googleClientSecret;
+passport.use(new GoogleStrategy({
+  clientID: config.googleAuthPass.clientID,
+  clientSecret: config.googleAuthPass.clientSecret,
+  callbackURL: config.googleAuthPass.callbackURL
+  },
+  function(accessToken,refreshToken,profile, done){
+    googleUser = profile.displayName;
+    googleToken = accessToken;
+    console.log(profile)
+    return done(null, profile)
+  }));
+  passport.serializeUser(function(user, done){
+    console.log('serializing', user);
+    done(null, user);
+  });
+  passport.deserializeUser(function(id,done){
+      done(err, user);
+  });
+
+///////Google Oauth endpoints////////
+app.get('/api/googleuser', (req, res) => {
+  if(googleUser){
+    res.status(200).send(googleUser)
+  } else res.status(404)
+});
+
+app.get('/logout',function(req,res){
+  req.session.destroy(function(err,data){
+  });
+});
+
+app.get('/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+
+app.get('/auth/google/callback',
+passport.authenticate('google', 
+{ successRedirect: 'http://localhost:3000/googlechart',
   failureRedirect: 'http://localhost:3000/' 
 }));
-app.get('/api/fbuser', (req, res)=>{
-  if(facebookUser){
-    res.status(200).send(facebookUser)
-  } else res.status(404)
-})
 
 app.listen(8080, function() {
   console.log('Listening on 8080');
